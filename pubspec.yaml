@@ -25,6 +25,8 @@ dependencies:
   cupertino_icons: ^0.1.2
   cloud_firestore: ^0.13.5
   firebase_auth: ^0.16.0
+  intl: ^0.17.0
+  
 
 dev_dependencies:
   flutter_test:
@@ -54,7 +56,23 @@ flutter:
 
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
+  fonts:
+    - family: Raleway
+      fonts:
+        - asset: assets/fonts/Raleway-Regular.ttf
+        - asset: assets/fonts/Raleway-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Raleway-Black.ttf
+          weight: 900
+    - family: RobotoCondensed
+      fonts:
+        - asset: assets/fonts/RobotoCondensed-Regular.ttf
+        - asset: assets/fonts/RobotoCondensed-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/RobotoCondensed-Light.ttf
+          weight: 300
+        - asset: assets/fonts/RobotoCondensed-Italic.ttf
+          style: italic
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a

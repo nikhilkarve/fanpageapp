@@ -1,7 +1,9 @@
+import 'package:fanpage_app/widgets/message_design.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 class MessageScreen extends StatefulWidget {
   @override
@@ -12,7 +14,7 @@ class _MessageScreenState extends State<MessageScreen> {
   var fanMessage = '';
   var userDocument;
   var userId;
-
+  var format = DateFormat('h:mm a');
   @override
   void initState() {
     super.initState();
@@ -23,7 +25,9 @@ class _MessageScreenState extends State<MessageScreen> {
   void _messageSubmit() {
     Firestore.instance
         .collection('messages/ne6MUaXi2wup9WOcZq85/alerts')
-        .add({'text': messageController.text});
+        .add({'text': messageController.text, 'createdAt': DateTime.now()});
+    messageController.clear;
+    Navigator.of(context).pop();
   }
 
   Future _getId() async {
@@ -58,7 +62,15 @@ class _MessageScreenState extends State<MessageScreen> {
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(60.0),
             child: AppBar(
-              title: Text('Fan Page'),
+              title: Row(
+                children: [
+                  Text('Fan',
+                      style: TextStyle(fontFamily: 'Raleway', fontSize: 22)),
+                  Text('Page',
+                      style:
+                          TextStyle(fontFamily: 'Raleway-Bold', fontSize: 22))
+                ],
+              ),
               actions: [
                 DropdownButton(
                   icon: Icon(
@@ -101,25 +113,50 @@ class _MessageScreenState extends State<MessageScreen> {
               }
               final documents = streamSnapshot.data.documents;
               return ListView.builder(
-                itemCount: documents.length,
-                itemBuilder: (ctx, index) => Container(
-                  padding: EdgeInsets.all(10),
-                  child: Card(
-                    elevation: 10,
+                  itemCount: documents.length,
+                  itemBuilder: (ctx, index) => MessageDesign(
+                        documents[index]['text'],
+                        format
+                                .format(documents[index]['createdAt'].toDate())
+                                .toString() ??
+                            '',
+                      )
+                  // Container(
+                  //   padding: EdgeInsets.all(10),
+                  //   child: Card(
+                  //     elevation: 10,
 
-                    // decoration:
-                    // BoxDecoration(border: Border.all(color: Colors.black)),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(5.0, 20.0, 5.0, 20.0),
-                      child: Container(
-                        child: Text(
-                          documents[index]['text'],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              );
+                  //     // decoration:
+                  //     // BoxDecoration(border: Border.all(color: Colors.black)),
+                  //     child: Padding(
+                  //       padding: const EdgeInsets.fromLTRB(5.0, 20.0, 5.0, 10.0),
+                  //       child: Container(
+                  //         child: Column(
+                  //           crossAxisAlignment: CrossAxisAlignment.stretch,
+                  //           mainAxisAlignment: MainAxisAlignment.end,
+                  //           children: [
+                  //             Text(
+                  //               documents[index]['text'],
+                  //               textAlign: TextAlign.center,
+                  //               style: const TextStyle(
+                  //                   fontWeight: FontWeight.w400, fontSize: 25),
+                  //             ),
+                  //             Text(
+                  // format
+                  //         .format(documents[index]['createdAt']
+                  //             .toDate())
+                  //         .toString() ??
+                  //     '',
+                  //                 textAlign: TextAlign.end,
+                  //                 style: const TextStyle(
+                  //                     fontWeight: FontWeight.w300, fontSize: 10)),
+                  //           ],
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  );
             },
           ),
           floatingActionButton: Visibility(
