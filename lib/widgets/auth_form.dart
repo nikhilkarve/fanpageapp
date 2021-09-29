@@ -1,4 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fanpage_app/provider/gogle_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class AuthForm extends StatefulWidget {
   // const AuthForm({ Key? key }) : super(key: key);
@@ -19,6 +24,7 @@ class _AuthFormState extends State<AuthForm> {
   var _uLastName = '';
   var _uPassword = '';
   var _logInPage = true;
+  var _userId;
 
   void _formSubmit() {
     final formResult = _globalFormKey.currentState.validate();
@@ -28,6 +34,11 @@ class _AuthFormState extends State<AuthForm> {
       widget.submitFn(_uEmail.trim(), _uPassword, _uName.trim(),
           _uLastName.trim(), _logInPage, context);
     }
+  }
+
+  void _googleSubmit() async {
+    final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
+    provider.googleLogin();
   }
 
   @override
@@ -113,23 +124,43 @@ class _AuthFormState extends State<AuthForm> {
                 if (!widget.loadingScreen)
                   ConstrainedBox(
                     constraints: BoxConstraints.tightFor(width: 300),
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all<Color>(
-                            Theme.of(context).accentColor),
-                        overlayColor: MaterialStateProperty.resolveWith<Color>(
-                          (Set<MaterialState> states) {
-                            if (states.contains(MaterialState.hovered))
-                              return Colors.grey.withOpacity(0.04);
-                            if (states.contains(MaterialState.focused) ||
-                                states.contains(MaterialState.pressed))
-                              return Colors.grey.withOpacity(0.12);
-                            return null; // Defer to the widget's default.
-                          },
+                    child: Column(
+                      children: [
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Theme.of(context).backgroundColor,
+                            minimumSize: Size(double.infinity, 50),
+                          ),
+                          onPressed: _formSubmit,
+                          child: Text(_logInPage ? 'Login' : 'Register'),
                         ),
-                      ),
-                      onPressed: _formSubmit,
-                      child: Text(_logInPage ? 'Login' : 'Register'),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                            primary: Theme.of(context).backgroundColor,
+                            minimumSize: Size(double.infinity, 50),
+                            // overlayColor:
+                            //     MaterialStateProperty.resolveWith<Color>(
+                            //   (Set<MaterialState> states) {
+                            //     if (states.contains(MaterialState.hovered))
+                            //       return Colors.grey.withOpacity(0.04);
+                            //     if (states.contains(MaterialState.focused) ||
+                            //         states.contains(MaterialState.pressed))
+                            //       return Colors.grey.withOpacity(0.12);
+                            //     return null; // Defer to the widget's default.
+                            //   },
+                            // ),
+                          ),
+                          icon: FaIcon(
+                            FontAwesomeIcons.google,
+                            color: Colors.black,
+                          ),
+                          label: Text(' Sign Up with Google'),
+                          onPressed: _googleSubmit,
+                        ),
+                      ],
                     ),
                   ),
                 if (_logInPage)

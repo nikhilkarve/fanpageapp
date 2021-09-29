@@ -9,10 +9,10 @@ class MessageDesign extends StatelessWidget {
     return Container(
         decoration: BoxDecoration(
           color: Theme.of(context).backgroundColor,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(7),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
+              color: Colors.grey.withOpacity(0.2),
               spreadRadius: 5,
               blurRadius: 7,
               offset: Offset(0, 3), // changes position of shadow
@@ -20,8 +20,8 @@ class MessageDesign extends StatelessWidget {
           ],
         ),
         width: 120,
-        padding: EdgeInsets.fromLTRB(5, 10, 5, 4),
-        margin: EdgeInsets.fromLTRB(10, 20, 10, 5),
+        padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+        margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.end,
@@ -31,7 +31,7 @@ class MessageDesign extends StatelessWidget {
               textAlign: TextAlign.center,
               style: const TextStyle(
                   fontWeight: FontWeight.w400,
-                  fontSize: 21,
+                  fontSize: 16,
                   fontFamily: 'Raleway'),
             ),
             Text(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+
 import 'package:intl/intl.dart';
 
 class MessageScreen extends StatefulWidget {
@@ -14,6 +15,7 @@ class _MessageScreenState extends State<MessageScreen> {
   var fanMessage = '';
   var userDocument;
   var userId;
+
   var format = DateFormat('h:mm a');
   @override
   void initState() {
@@ -22,6 +24,7 @@ class _MessageScreenState extends State<MessageScreen> {
   }
 
   TextEditingController messageController = TextEditingController();
+
   void _messageSubmit() {
     Firestore.instance
         .collection('messages/ne6MUaXi2wup9WOcZq85/alerts')
@@ -165,7 +168,7 @@ class _MessageScreenState extends State<MessageScreen> {
               child: Container(
                 alignment: Alignment.bottomCenter,
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 0, 70),
+                  padding: const EdgeInsets.fromLTRB(20, 0, 0, 20),
                   child: FloatingActionButton(
                     child: Icon(Icons.add),
                     onPressed: () {
