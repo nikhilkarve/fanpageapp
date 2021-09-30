@@ -2,8 +2,6 @@ import 'package:fanpage_app/widgets/message_design.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/services.dart';
-
 import 'package:intl/intl.dart';
 
 class MessageScreen extends StatefulWidget {
@@ -16,7 +14,7 @@ class _MessageScreenState extends State<MessageScreen> {
   var userDocument;
   var userId;
 
-  var format = DateFormat('h:mm a');
+  var format = DateFormat('MMM d, h:mm a');
   @override
   void initState() {
     super.initState();
@@ -107,6 +105,7 @@ class _MessageScreenState extends State<MessageScreen> {
           body: StreamBuilder(
             stream: Firestore.instance
                 .collection('messages/ne6MUaXi2wup9WOcZq85/alerts')
+                .orderBy('createdAt', descending: true)
                 .snapshots(),
             builder: (ctx, streamSnapshot) {
               if (streamSnapshot.connectionState == ConnectionState.waiting) {

@@ -31,7 +31,7 @@ class MessageDesign extends StatelessWidget {
               textAlign: TextAlign.center,
               style: const TextStyle(
                   fontWeight: FontWeight.w400,
-                  fontSize: 16,
+                  fontSize: 15,
                   fontFamily: 'Raleway'),
             ),
             Text(
@@ -42,7 +42,7 @@ class MessageDesign extends StatelessWidget {
                 dateMessage,
                 textAlign: TextAlign.end,
                 style:
-                    const TextStyle(fontWeight: FontWeight.w300, fontSize: 12)),
+                    const TextStyle(fontWeight: FontWeight.w300, fontSize: 11)),
           ],
         ));
   }
